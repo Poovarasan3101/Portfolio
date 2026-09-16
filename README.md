@@ -1,239 +1,735 @@
-# Poovarasan — Classic Full-Stack Portfolio Web Application
+# 🧑‍💻 Poovarasan — Full Stack Developer Portfolio
 
-A complete, responsive, production-ready personal portfolio web application built for **Poovarasan**, Python Full Stack Developer.
+A modern, responsive, and professionally designed **Full Stack Developer Portfolio** built with **React.js and Django REST Framework**.
 
-Designed with a **timeless, classic, and elegant editorial aesthetic** — featuring refined serif typography, off-white/cream paper backgrounds, deep charcoal typography, thin borders, and subtle hover interactions, avoiding generic modern dashboard styles or excessive animations.
-
----
-
-## Technology Stack
-
-- **Backend**: Python 3.14+, Django 6.1, Django REST Framework, SQLite (with built-in switch to PostgreSQL), Pillow, django-cors-headers.
-- **Frontend**: React 19, Vite, Tailwind CSS, Lucide Icons, React Router DOM, Axios.
-- **Authentication**: Django REST Framework Token Authentication, PBKDF2 password hashing, secure protected admin routes, token invalidation on logout and password change.
+This portfolio allows visitors to explore my profile, skills, education, experience, projects, resume, and contact information. It also includes a secure **Admin Dashboard** where portfolio content can be managed dynamically without changing the source code.
 
 ---
 
-## Directory Structure
+## 🌐 Live Demo
+
+🔗 **Live Website:** `Add your deployed website URL here`
+
+🔗 **GitHub Repository:** `Add your GitHub repository URL here`
+
+---
+
+## 📸 Screenshots
+
+> Add screenshots of your application here.
+
+### 🏠 Home
+
+`Add Home Page Screenshot`
+
+### 👨‍💻 About
+
+`Add About Section Screenshot`
+
+### 🚀 Projects
+
+`Add Projects Section Screenshot`
+
+### 🔐 Admin Login
+
+`Add Admin Login Screenshot`
+
+### 📊 Admin Dashboard
+
+`Add Admin Dashboard Screenshot`
+
+---
+
+# 📌 About The Project
+
+The **Poovarasan Portfolio** is a full-stack personal portfolio application created to showcase my technical skills, projects, education, experience, and professional information.
+
+Unlike a static portfolio website, this project uses a **Django REST API backend and React frontend**, allowing portfolio information to be managed dynamically through an authenticated admin dashboard.
+
+The application follows a clean separation between the frontend and backend and demonstrates practical full-stack development concepts.
+
+---
+
+# ✨ Features
+
+## 🌍 Public Portfolio
+
+* Responsive home page
+* Professional hero section
+* About section
+* Skills section
+* Projects section
+* Experience section
+* Education section
+* Resume download
+* Contact section
+* Social media links
+* Custom extra sections
+* Responsive navigation
+* Mobile-friendly design
+* Smooth scrolling
+* Form validation
+
+---
+
+## 🔐 Admin Dashboard
+
+The portfolio includes a secure admin panel.
+
+### Admin Features
+
+* Secure admin login
+* Dashboard overview
+* Manage profile information
+* Manage About section
+* Add projects
+* Edit projects
+* Delete projects
+* Manage project images
+* Manage project technologies
+* Add/Edit/Delete skills
+* Add/Edit/Delete experience
+* Add/Edit/Delete education
+* Add custom sections
+* Edit custom sections
+* Delete custom sections
+* Enable/disable sections
+* Upload/replace resume
+* Update contact information
+* Change admin password
+* Secure logout
+
+---
+
+# 🚀 Project Management
+
+Projects are stored in the Django database and displayed dynamically on the React frontend.
+
+Each project can contain:
+
+* Project title
+* Short description
+* Detailed description
+* Project image
+* Technologies used
+* Project category
+* GitHub repository URL
+* Live demo URL
+* Project date
+* Featured project status
+* Display order
+
+The admin can update project information without modifying the React source code.
+
+---
+
+# 🧩 Dynamic Extra Sections
+
+The application supports custom portfolio sections.
+
+The admin can create additional sections such as:
+
+* Services
+* Certifications
+* Achievements
+* Testimonials
+* Hobbies
+* Publications
+* Blog
+* What I Do
+
+Each section can be:
+
+* Created
+* Edited
+* Deleted
+* Enabled
+* Disabled
+* Reordered
+
+This makes the portfolio flexible and easy to customize.
+
+---
+
+# 🛠️ Technologies Used
+
+## Frontend
+
+| Technology   | Purpose              |
+| ------------ | -------------------- |
+| React.js     | Frontend development |
+| React Router | Page navigation      |
+| Axios        | API communication    |
+| HTML5        | Structure            |
+| CSS3         | Styling              |
+| Tailwind CSS | Responsive UI        |
+| JavaScript   | Application logic    |
+
+## Backend
+
+| Technology            | Purpose                        |
+| --------------------- | ------------------------------ |
+| Python                | Backend programming            |
+| Django                | Web framework                  |
+| Django REST Framework | REST API                       |
+| SQLite                | Development database           |
+| Pillow                | Image processing               |
+| CORS Headers          | Frontend-backend communication |
+
+## Development Tools
+
+| Tool    | Purpose         |
+| ------- | --------------- |
+| VS Code | Code editor     |
+| Git     | Version control |
+| GitHub  | Code hosting    |
+| Postman | API testing     |
+| Figma   | UI design       |
+
+---
+
+# 🏗️ Project Architecture
+
+The application follows a **frontend + REST API backend architecture**.
 
 ```text
-poovarasan-portfolio/
-├── backend/
-│   ├── manage.py
-│   ├── config/
-│   │   ├── settings.py
-│   │   ├── urls.py
-│   │   └── wsgi.py
-│   ├── portfolio/
-│   │   ├── models.py              # Profile, Project, Skill, Experience, Education, ExtraSection, ContactMessage
-│   │   ├── serializers.py         # DRF serializers with validation & file URLs
-│   │   ├── views.py               # ViewSets, Profile singleton, Auth & Dashboard stats
-│   │   ├── urls.py                # REST API routes
-│   │   ├── admin.py               # Django Admin registration
-│   │   ├── tests.py               # Unit tests for APIs and auth flows
-│   │   └── management/commands/
-│   │       └── setup_portfolio.py # Bootstraps admin and seeds initial data
-│   ├── media/                     # Uploaded profile photos, project screenshots, resumes
-│   └── db.sqlite3
+                    ┌──────────────────────┐
+                    │       User           │
+                    └──────────┬───────────┘
+                               │
+                               ▼
+                    ┌──────────────────────┐
+                    │    React Frontend    │
+                    │                      │
+                    │  Portfolio UI        │
+                    │  Admin Dashboard     │
+                    └──────────┬───────────┘
+                               │
+                         REST API
+                               │
+                               ▼
+                    ┌──────────────────────┐
+                    │   Django Backend     │
+                    │                      │
+                    │ Django REST Framework│
+                    │ Authentication       │
+                    │ Business Logic       │
+                    └──────────┬───────────┘
+                               │
+                               ▼
+                    ┌──────────────────────┐
+                    │      Database        │
+                    │       SQLite         │
+                    └──────────────────────┘
+```
+
+---
+
+# 📁 Project Structure
+
+```text
+portfolio/
 │
 ├── frontend/
+│   │
+│   ├── public/
+│   │
 │   ├── src/
 │   │   ├── components/
-│   │   │   ├── Navbar.jsx         # Sticky header with mobile drawer
-│   │   │   ├── Hero.jsx           # Timeless hero with resume download & portrait
-│   │   │   ├── About.jsx          # Bio, career objective, strengths, interests
-│   │   │   ├── Skills.jsx         # Categorized skills (Frontend, Backend, Database, Tools)
-│   │   │   ├── Projects.jsx       # Filterable cards with modal details
-│   │   │   ├── Experience.jsx     # Career timeline & Fresher notice support
-│   │   │   ├── Education.jsx      # Academic qualifications
-│   │   │   ├── ExtraSections.jsx  # Custom dynamic sections (Services, Certifications)
-│   │   │   ├── Contact.jsx        # Working contact form & direct reach-out info
-│   │   │   ├── Footer.jsx         # Classic copyright & social links
-│   │   │   ├── ProtectedRoute.jsx # Route guard for admin panel
-│   │   │   ├── ConfirmModal.jsx   # Classic delete confirmation dialog
-│   │   │   └── SocialIcons.jsx    # SVG icons for GitHub & LinkedIn
 │   │   ├── pages/
-│   │   │   ├── Home.jsx           # Public portfolio view
-│   │   │   └── AdminLogin.jsx     # Secure admin login
 │   │   ├── admin/
-│   │   │   ├── AdminLayout.jsx    # Admin portal shell with responsive sidebar
-│   │   │   ├── Dashboard.jsx      # Summary metrics and recent visitor messages
-│   │   │   ├── ProfileManager.jsx # Edit About, bio, photo, and resume upload
-│   │   │   ├── ProjectManager.jsx # Full CRUD for unlimited projects & screenshots
-│   │   │   ├── SkillManager.jsx   # Full CRUD for categorized technical skills
-│   │   │   ├── ExperienceManager.jsx # Work history & Fresher status manager
-│   │   │   ├── EducationManager.jsx  # Academic records manager
-│   │   │   ├── ExtraSectionManager.jsx # Dynamic custom sections manager
-│   │   │   ├── MessageManager.jsx # Visitor inquiries viewer
-│   │   │   └── ChangePassword.jsx # Password change with current verification
 │   │   ├── services/
-│   │   │   └── api.js             # Axios client with Token interceptor
 │   │   ├── context/
-│   │   │   └── AuthContext.jsx    # Global authentication provider
+│   │   ├── assets/
 │   │   ├── App.jsx
 │   │   └── main.jsx
-│   ├── tailwind.config.js
-│   └── package.json
+│   │
+│   ├── package.json
+│   └── vite.config.js
 │
+├── backend/
+│   │
+│   ├── config/
+│   ├── portfolio/
+│   ├── media/
+│   ├── manage.py
+│   └── requirements.txt
+│
+├── .gitignore
 └── README.md
 ```
 
 ---
 
-## Initial Admin Credentials
+# 🗄️ Database Models
 
-> [!IMPORTANT]
-> The initial bootstrap credentials for the Admin Portal are:
-> - **Username**: `Poovarasan`
-> - **Password**: `Poovarasan31@`
->
-> **Security Note**: These credentials are used only to bootstrap the administrator account into the database using secure PBKDF2 hashing. Passwords are never hard-coded into client-side JavaScript or API responses. After logging in, you can change the password at any time via `/admin/change-password`.
+The backend contains database models for managing portfolio information.
+
+### Profile
+
+Stores:
+
+* Name
+* Professional title
+* Bio
+* Career objective
+* Profile image
+* Contact information
+* Social links
+* Resume
+
+### Project
+
+Stores:
+
+* Title
+* Description
+* Image
+* Technologies
+* Category
+* GitHub URL
+* Live URL
+* Date
+* Featured status
+
+### Skill
+
+Stores:
+
+* Skill name
+* Skill category
+* Skill level
+* Display order
+
+### Experience
+
+Stores:
+
+* Job title
+* Company
+* Location
+* Start date
+* End date
+* Description
+
+### Education
+
+Stores:
+
+* Degree
+* Institution
+* Location
+* Start year
+* End year
+* Description
+
+### Extra Section
+
+Stores:
+
+* Section title
+* Subtitle
+* Description
+* Image
+* Button
+* Button URL
+* Display order
+* Active status
+
+### Contact Message
+
+Stores:
+
+* Name
+* Email
+* Subject
+* Message
+* Created date
 
 ---
 
-## Getting Started
+# 🔗 API Endpoints
 
-### 1. Backend Setup (Django REST Framework)
+Example API structure:
 
-Navigate to the `backend` directory:
+```text
+/api/profile/
+
+/api/projects/
+
+/api/projects/<id>/
+
+/api/skills/
+
+/api/experience/
+
+/api/education/
+
+/api/extra-sections/
+
+/api/contact/
+
+/api/auth/login/
+
+/api/auth/logout/
+
+/api/auth/change-password/
+```
+
+### HTTP Methods
+
+```text
+GET     → Retrieve data
+POST    → Create data
+PUT     → Update data
+PATCH   → Partially update data
+DELETE  → Delete data
+```
+
+---
+
+# 🔐 Authentication & Security
+
+The admin panel uses Django authentication.
+
+Important security practices implemented:
+
+* Protected admin routes
+* Authenticated API requests
+* Password hashing through Django
+* Protected CRUD operations
+* Form validation
+* API validation
+* Environment variables for sensitive configuration
+* No plaintext passwords stored in the database
+* Admin credentials are not exposed in the frontend
+
+> **Security Note:** Never commit passwords, API keys, Django secret keys, or `.env` files to GitHub.
+
+---
+
+# ⚙️ Installation & Setup
+
+## 1. Clone the Repository
+
+```bash
+git clone YOUR_GITHUB_REPOSITORY_URL
+```
+
+Move into the project directory:
+
+```bash
+cd portfolio
+```
+
+---
+
+# 🐍 Backend Setup
+
+Go to the backend folder:
 
 ```bash
 cd backend
 ```
 
-Create and activate a virtual environment (optional if using system Python):
+Create a virtual environment:
+
+### Windows
 
 ```bash
-# Windows
 python -m venv venv
 venv\Scripts\activate
+```
 
-# macOS / Linux
+### macOS / Linux
+
+```bash
 python3 -m venv venv
 source venv/bin/activate
 ```
 
-Install the dependencies:
+---
+
+## Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+If `requirements.txt` does not exist:
 
 ```bash
 pip install django djangorestframework django-cors-headers pillow
 ```
 
-Apply database migrations:
+---
+
+## Run Migrations
 
 ```bash
+python manage.py makemigrations
 python manage.py migrate
-```
-
-Bootstrap the administrator user and seed the portfolio data:
-
-```bash
-python manage.py setup_portfolio
-```
-
-Run the backend development server:
-
-```bash
-python manage.py runserver 8000
-```
-
-The Django REST API will be accessible at: `http://127.0.0.1:8000/api/`
-
-To run the automated backend unit tests:
-
-```bash
-python manage.py test
 ```
 
 ---
 
-### 2. Frontend Setup (React + Vite + Tailwind CSS)
+## Create Admin User
 
-In a separate terminal, navigate to the `frontend` directory:
+Create the Django admin user securely:
+
+```bash
+python manage.py createsuperuser
+```
+
+Enter your username and password when prompted.
+
+**Do not put your password in this README or in the GitHub repository.**
+
+---
+
+## Start Django Server
+
+```bash
+python manage.py runserver
+```
+
+Backend will normally run at:
+
+```text
+http://127.0.0.1:8000/
+```
+
+---
+
+# ⚛️ Frontend Setup
+
+Open another terminal.
+
+Go to the frontend directory:
 
 ```bash
 cd frontend
 ```
 
-Install the npm packages:
+Install dependencies:
 
 ```bash
 npm install
 ```
 
-Start the Vite development server:
+Start the development server:
 
 ```bash
 npm run dev
 ```
 
-The React portfolio application will be accessible at: `http://localhost:5173/`
+The frontend will normally run at:
 
-To create a production build:
-
-```bash
-npm run build
+```text
+http://localhost:5173/
 ```
 
 ---
 
-## Application Features & Usage
+# 🔧 Environment Variables
 
-### 1. Public Portfolio (`/`)
-- **Hero Section**: Highlights Poovarasan's title as "Python Full Stack Developer", headline intro, core technology tags, action buttons ("View Projects", "Download Resume", "Contact Me"), and a classic portrait frame.
-- **About Section**: Detailed biography, career objective, developer background, core strengths, and interests.
-- **Skills Section**: Categorized into *Frontend*, *Backend*, *Database*, and *Tools*, displaying proficiency bars and counts.
-- **Projects Section**: Showcases full-stack projects including the *Business Finance Management System*. Features category filtering, tech pills, GitHub/Live demo links, and an expandable detailed overview modal.
-- **Experience Section**: Professional employment timeline with support for an active *"Fresher / Open to Opportunities"* badge.
-- **Education Section**: Degree, university, period, and coursework details.
-- **Extra Sections**: Custom sections managed directly by the admin (e.g., Services, Certifications, Publications).
-- **Contact Section**: Working contact form that submits messages directly to the Django database, with client and server validation, plus direct contact cards (email, phone, location, LinkedIn, GitHub).
-- **Responsive Layout**: Designed and tested for mobile (375px+), tablet (768px+), and desktop (1024px+ - 1440px+).
+Create a `.env` file for environment-specific configuration.
 
----
+Example:
 
-### 2. Admin Management Portal (`/admin/dashboard`)
-Access the login page at `/admin/login`:
-- Enter `Poovarasan` and `Poovarasan31@`.
-- Invalid attempts return a generic *"Invalid username or password."* error message to prevent username enumeration.
-- Authenticated sessions are managed via DRF Tokens stored in local storage and attached to every mutating API request.
-- **Dashboard Overview**: Displays real-time counts of projects, skills, experience, education, extra sections, and visitor messages.
-- **Profile & About Manager**: Update personal details, bio, career goals, upload profile pictures, and upload/replace resume PDFs.
-- **Project Manager**: Add unlimited projects, edit existing records, upload screenshots, assign categories, and toggle featured status.
-- **Skill Manager**: Add, edit, or delete skills with category assignment and visual proficiency sliders.
-- **Experience Manager**: Add or edit employment history or activate the fresher notice.
-- **Education Manager**: Manage degrees, institutions, and periods.
-- **Extra Sections Manager**: Add custom sections (e.g. Services, Certifications), toggle visibility on/off, and reorder.
-- **Contact Inquiries**: Review visitor messages with sender details and timestamp, and delete or reply directly via email.
-- **Change Password**: Validates current password, enforces minimum security rules, hashes new password with Django auth, invalidates old token, and redirects to login with the new credentials.
+```env
+VITE_API_URL=http://127.0.0.1:8000/api
+```
+
+For Django, use environment variables for sensitive settings such as:
+
+```env
+DJANGO_SECRET_KEY=your_secret_key
+DEBUG=True
+```
+
+Add `.env` to `.gitignore`.
 
 ---
 
-## Switching from SQLite to PostgreSQL
+# 📱 Responsive Design
 
-The project is pre-configured to easily switch from SQLite to PostgreSQL. In `backend/config/settings.py`, database settings read from environment variables:
+The portfolio is designed to work across:
 
-1. Install PostgreSQL driver:
-   ```bash
-   pip install psycopg2-binary
-   ```
-2. Set environment variables in your terminal or `.env` file:
-   ```bash
-   export DB_ENGINE=postgresql
-   export POSTGRES_DB=poovarasan_portfolio
-   export POSTGRES_USER=postgres
-   export POSTGRES_PASSWORD=your_password
-   export POSTGRES_HOST=localhost
-   export POSTGRES_PORT=5432
-   ```
-3. Run migrations and setup:
-   ```bash
-   python manage.py migrate
-   python manage.py setup_portfolio
-   ```
+* 🖥️ Desktop
+* 💻 Laptop
+* 📱 Mobile
+* 📲 Tablet
+
+The layout adapts automatically to different screen sizes.
 
 ---
 
-## License & Copyright
+# 🎨 UI Design
 
-© 2026 Poovarasan. All Rights Reserved.
+The portfolio follows a classic professional visual style.
+
+Design principles include:
+
+* Clean typography
+* Professional spacing
+* Minimal visual clutter
+* Subtle animations
+* Elegant cards
+* Responsive layouts
+* Clear navigation
+* Accessible buttons
+* Consistent design system
+
+The goal is to provide a professional experience for recruiters, clients, and visitors.
+
+---
+
+# 🧪 Testing
+
+Before deployment, test:
+
+### Frontend
+
+* Navigation
+* Responsive layout
+* Forms
+* Project cards
+* Resume download
+* API integration
+* Error handling
+
+### Backend
+
+* API endpoints
+* CRUD operations
+* Authentication
+* Password change
+* Database operations
+* Image uploads
+* Form validation
+
+### Security
+
+* Unauthorized admin access
+* Invalid login attempts
+* Protected API endpoints
+* Password validation
+
+---
+
+# 🚀 Future Improvements
+
+Planned improvements may include:
+
+* AI-powered portfolio assistant
+* Blog management
+* Project search and filtering
+* Project categories
+* Dark mode
+* Visitor analytics
+* Email notification system
+* PostgreSQL production database
+* Cloud image storage
+* Automated deployment
+* Docker support
+* CI/CD pipeline
+
+---
+
+# 💼 Why I Built This Project
+
+I built this project to demonstrate practical knowledge of:
+
+* React.js
+* Python
+* Django
+* Django REST Framework
+* REST API development
+* Authentication
+* CRUD operations
+* Database management
+* Responsive UI development
+* Git & GitHub
+* Full-stack application architecture
+
+This project also provides a real-world example of how a frontend application communicates with a backend API.
+
+---
+
+# 👨‍💻 About Me
+
+Hi, I'm **Poovarasan**, a passionate **Python Full Stack Developer** interested in building practical and user-friendly web applications.
+
+### Technical Interests
+
+* Python
+* Django
+* React.js
+* JavaScript
+* REST APIs
+* Database Management
+* Full Stack Web Development
+* AI-powered applications
+
+I am continuously improving my development skills by building practical projects and learning modern technologies.
+
+---
+
+# 📫 Contact
+
+### GitHub
+
+`Add your GitHub profile URL`
+
+### LinkedIn
+
+`Add your LinkedIn profile URL`
+
+### Email
+
+`Add your professional email address`
+
+### Portfolio
+
+`Add your deployed portfolio URL`
+
+---
+
+# ⭐ Support
+
+If you find this project useful or interesting, consider giving the repository a ⭐ on GitHub.
+
+---
+
+# 📄 License
+
+This project is created for personal portfolio and educational purposes.
+
+You may refer to the project structure and implementation for learning purposes.
+
+---
+
+## ⭐ Project Highlights
+
+```text
+✔ React Frontend
+✔ Django REST API
+✔ Secure Authentication
+✔ Admin Dashboard
+✔ Dynamic Project Management
+✔ CRUD Operations
+✔ Dynamic Skills
+✔ Dynamic Experience
+✔ Dynamic Education
+✔ Custom Sections
+✔ Resume Management
+✔ Contact Form
+✔ Responsive Design
+✔ Database Integration
+✔ Git & GitHub
+```
+
+---
+
+**Built with ❤️ by Poovarasan**
