@@ -13,7 +13,7 @@ class Profile(models.Model):
     strengths = models.TextField(blank=True, default="")
     profile_image = models.ImageField(upload_to="profile/", blank=True, null=True)
     resume = models.FileField(upload_to="resumes/", blank=True, null=True)
-    email = models.EmailField(blank=True, default="poovarasan.dev@example.com")
+    email = models.EmailField(blank=True, default="poovarasan31012005@gmail.com")
     phone = models.CharField(max_length=50, blank=True, default="+91 9876543210")
     location = models.CharField(max_length=150, blank=True, default="Tamil Nadu, India")
     github = models.URLField(blank=True, default="https://github.com/Poovarasan")

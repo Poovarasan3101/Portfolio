@@ -113,7 +113,7 @@ const Hero = ({ profile }) => {
                   <img
                     src={profile.profile_image_url}
                     alt={name}
-                    className="w-full h-full object-cover object-center grayscale hover:grayscale-0 transition-all duration-500"
+                    className="w-full h-full object-cover object-center  hover:grayscale-0 transition-all duration-500"
                   />
                 ) : (
                   <div className="w-full h-full bg-stone-100 flex flex-col items-center justify-center p-6 text-center">
