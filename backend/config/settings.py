@@ -117,7 +117,7 @@ REST_FRAMEWORK = {
 # CORS Configuration
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWED_ORIGINS = [
-   "https://api.vercel.com/prj_6jmQBox6T3Px7fs3V9vllcexahoV",
+   "https://portfolio-fawn-psi-23.vercel.app/",
 ]
 CORS_ALLOW_CREDENTIALS = True
 
