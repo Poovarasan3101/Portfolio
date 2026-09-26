@@ -119,7 +119,7 @@ REST_FRAMEWORK = {
 CORS_ALLOW_ALL_ORIGINS = False
 
 CORS_ALLOWED_ORIGINS = [
-    "https://portfolio-fawn-psi-23.vercel.app",
+    "https://portfolio-fe-iota-swart.vercel.app",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
