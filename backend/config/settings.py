@@ -24,10 +24,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-<<<<<<< HEAD
-=======
     
->>>>>>> 421035aacd30e5c9556a0876b28ac2af296a24b8
     # Third-party
     'rest_framework',
     'rest_framework.authtoken',
