@@ -65,11 +65,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('DB_NAME', 'Portfolio_details'),
-        'USER': os.environ.get('DB_USER', 'root'),
-        'PASSWORD': os.environ.get('DB_PASSWORD', 'poovarasan'),
-        'HOST': os.environ.get('DB_HOST', '127.0.0.1'),
-        'PORT': os.environ.get('DB_PORT', '3306'),
+        'NAME': os.environ.get('DB_NAME', 'defaultdb'),
+        'USER': os.environ.get('DB_USER', 'avnadmin'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'AVNS_vZZZxf2jaQjP8u2ll0c'),
+        'HOST': os.environ.get('DB_HOST', 'mysql-3074525b-portfoliodetails.b.aivencloud.com'),
+        'PORT': os.environ.get('DB_PORT', '20749'),
     }
 }
 
