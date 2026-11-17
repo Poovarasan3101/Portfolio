@@ -1,102 +1,67 @@
-import React, { useState, useEffect } from 'react';
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import About from './components/About';
-import Skills from './components/Skills';
-import Projects from './components/Projects';
-import Education from './components/Education';
-import Certifications from './components/Certifications';
-import Contact from './components/Contact';
-import Footer from './components/Footer';
-import ResumeModal from './components/ResumeModal';
-import { portfolioService, FALLBACK_DATA } from './services/api';
-import { Loader2 } from 'lucide-react';
+import React from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import { ToastProvider } from './context/ToastContext';
+
+import PublicPortfolio from './pages/PublicPortfolio';
+import AdminLogin from './pages/admin/AdminLogin';
+import ProtectedRoute from './pages/admin/ProtectedRoute';
+import AdminLayout from './pages/admin/AdminLayout';
+import DashboardOverview from './pages/admin/DashboardOverview';
+import ProfileManager from './pages/admin/ProfileManager';
+import HeroManager from './pages/admin/HeroManager';
+import SkillsManager from './pages/admin/SkillsManager';
+import ProjectsManager from './pages/admin/ProjectsManager';
+import EducationManager from './pages/admin/EducationManager';
+import ExperienceManager from './pages/admin/ExperienceManager';
+import CertificatesManager from './pages/admin/CertificatesManager';
+import ResumeManager from './pages/admin/ResumeManager';
+import SocialLinksManager from './pages/admin/SocialLinksManager';
+import MessagesManager from './pages/admin/MessagesManager';
+import SettingsManager from './pages/admin/SettingsManager';
 
 function App() {
-  const [data, setData] = useState(FALLBACK_DATA);
-  const [loading, setLoading] = useState(true);
-  const [isLive, setIsLive] = useState(false);
-  const [isResumeOpen, setIsResumeOpen] = useState(false);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await portfolioService.getOverview();
-        if (result && result.data) {
-          setData(result.data);
-          setIsLive(result.isLive);
-        }
-      } catch (err) {
-        console.warn("Using default synced portfolio dataset:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
   return (
-    <div className="min-h-screen bg-[#080808] text-[#e5e7eb] font-sans selection:bg-white selection:text-black">
-      {/* Top Navbar */}
-      <Navbar 
-        onOpenResume={() => setIsResumeOpen(true)} 
-        isBackendLive={isLive}
-      />
+    <BrowserRouter>
+      <ToastProvider>
+        <AuthProvider>
+          <Routes>
+            {/* Public Portfolio */}
+            <Route path="/" element={<PublicPortfolio />} />
 
-      <main>
-        {/* Hero Section */}
-        <Hero 
-          profile={data.profile} 
-          onOpenResume={() => setIsResumeOpen(true)} 
-        />
+            {/* Dedicated Admin Login */}
+            <Route path="/admin/login" element={<AdminLogin />} />
 
-        {/* About Section */}
-        <About 
-          profile={data.profile} 
-        />
+            {/* Protected Admin Dashboard Routes */}
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute>
+                  <AdminLayout />
+                </ProtectedRoute>
+              }
+            >
+              <Route index element={<Navigate to="/admin/dashboard" replace />} />
+              <Route path="dashboard" element={<DashboardOverview />} />
+              <Route path="profile" element={<ProfileManager />} />
+              <Route path="hero" element={<HeroManager />} />
+              <Route path="skills" element={<SkillsManager />} />
+              <Route path="projects" element={<ProjectsManager />} />
+              <Route path="education" element={<EducationManager />} />
+              <Route path="experience" element={<ExperienceManager />} />
+              <Route path="certificates" element={<CertificatesManager />} />
+              <Route path="resume" element={<ResumeManager />} />
+              <Route path="social-links" element={<SocialLinksManager />} />
+              <Route path="messages" element={<MessagesManager />} />
+              <Route path="settings" element={<SettingsManager />} />
+            </Route>
 
-        {/* Skills Section */}
-        <Skills 
-          skills={data.skills} 
-        />
-
-        {/* Projects Section */}
-        <Projects 
-          projects={data.projects} 
-        />
-
-        {/* Education Section */}
-        <Education 
-          education={data.education} 
-        />
-
-        {/* Certifications Section */}
-        <Certifications 
-          certifications={data.certifications} 
-        />
-
-        {/* Contact Section */}
-        <Contact 
-          profile={data.profile} 
-        />
-      </main>
-
-      {/* Footer */}
-      <Footer 
-        onOpenResume={() => setIsResumeOpen(true)} 
-      />
-
-      {/* Interactive Printable Resume Modal */}
-      <ResumeModal
-        isOpen={isResumeOpen}
-        onClose={() => setIsResumeOpen(false)}
-        profile={data.profile}
-        skills={data.skills}
-        education={data.education}
-        certifications={data.certifications}
-      />
-    </div>
+            {/* Catch-all */}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </AuthProvider>
+      </ToastProvider>
+    </BrowserRouter>
   );
 }
 

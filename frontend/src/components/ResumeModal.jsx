@@ -1,45 +1,84 @@
 import React from 'react';
-import { 
-  X, 
-  Download, 
-  Printer, 
-  FileText, 
-  Mail, 
-  Phone, 
-  MapPin, 
+import {
+  X,
+  Download,
+  Printer,
+  FileText,
+  Mail,
+  Phone,
+  MapPin,
   CheckCircle,
-  ExternalLink
+  ExternalLink,
 } from 'lucide-react';
-import { GithubIcon, LinkedinIcon } from './Icons';
+import { SocialIcon } from './Icons';
 
-const ResumeModal = ({ isOpen, onClose, profile, skills = [], education = [], certifications = [] }) => {
+const ResumeModal = ({
+  isOpen,
+  onClose,
+  profile,
+  skills = [],
+  projects = [],
+  education = [],
+  experience = [],
+  certifications = [],
+  socialLinks = [],
+}) => {
   if (!isOpen) return null;
 
   const handlePrint = () => {
     window.print();
   };
 
+  const resumeDownloadUrl = profile?.resume_file_url || '';
+  const groupedSkills = {
+    Frontend: skills.filter((s) => s.category === 'frontend').map((s) => s.name),
+    Backend: skills.filter((s) => s.category === 'backend').map((s) => s.name),
+    Database: skills.filter((s) => s.category === 'database').map((s) => s.name),
+    'Tools & Soft Skills': skills
+      .filter((s) => s.category === 'tools' || s.category === 'soft_skills')
+      .map((s) => s.name),
+  };
+
+  const displayLinks =
+    socialLinks.length > 0
+      ? socialLinks
+      : [
+          ...(profile?.linkedin_url ? [{ id: 'li', platform: 'LinkedIn', url: profile.linkedin_url, icon_name: 'Linkedin' }] : []),
+          ...(profile?.github_url ? [{ id: 'gh', platform: 'GitHub', url: profile.github_url, icon_name: 'Github' }] : []),
+        ];
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/90 backdrop-blur-md animate-fadeIn overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/90 backdrop-blur-md overflow-y-auto">
       <div className="relative w-full max-w-4xl max-h-[92vh] overflow-y-auto rounded-2xl bg-[#0f0f0f] border border-white/20 shadow-2xl p-6 sm:p-10 space-y-8 my-auto">
-        
         {/* Top Control Bar */}
-        <div className="flex items-center justify-between pb-4 border-b border-white/10 no-print">
+        <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-white/10 no-print">
           <div className="flex items-center gap-2">
             <FileText className="w-5 h-5 text-neutral-300" />
             <span className="font-mono text-xs uppercase tracking-wider text-neutral-300 font-semibold">
-              Curriculum Vitae • Poovarasan
+              Curriculum Vitae • {profile?.name || 'Developer'}
             </span>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5">
+            {resumeDownloadUrl && (
+              <a
+                href={resumeDownloadUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                download={profile?.resume_filename || 'Resume.pdf'}
+                className="px-3.5 py-1.5 rounded-lg bg-white text-black hover:bg-neutral-200 font-bold text-xs flex items-center gap-1.5 transition-colors shadow-glow-sm"
+              >
+                <Download className="w-3.5 h-3.5" />
+                <span>Download PDF</span>
+              </a>
+            )}
             <button
               onClick={handlePrint}
               className="px-3.5 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white font-medium text-xs flex items-center gap-1.5 transition-colors border border-white/10 cursor-pointer"
               title="Print or Save as PDF"
             >
               <Printer className="w-3.5 h-3.5" />
-              <span>Print / PDF</span>
+              <span>Print View</span>
             </button>
 
             <button
@@ -52,196 +91,233 @@ const ResumeModal = ({ isOpen, onClose, profile, skills = [], education = [], ce
           </div>
         </div>
 
-        {/* Printable Resume Canvas */}
+        {/* Printable Dynamic Resume Canvas */}
         <div id="printable-resume" className="space-y-8 font-sans text-neutral-200">
-          
           {/* Header */}
           <div className="border-b border-white/15 pb-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
                 <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-                  Poovarasan S
+                  {profile?.name}
                 </h1>
                 <p className="text-base font-semibold text-neutral-300 mt-1 font-mono">
-                  Python Full Stack Developer
+                  {profile?.role}
                 </p>
               </div>
 
               <div className="text-xs font-mono text-neutral-400 space-y-1 sm:text-right">
-                <div className="flex items-center sm:justify-end gap-1.5">
-                  <Mail className="w-3.5 h-3.5 text-neutral-400" />
-                  <span>poovarasan31012005@gmail.com</span>
-                </div>
-                <div className="flex items-center sm:justify-end gap-1.5">
-                  <Phone className="w-3.5 h-3.5 text-neutral-400" />
-                  <span>+91-9629617818</span>
-                </div>
-                <div className="flex items-center sm:justify-end gap-1.5">
-                  <MapPin className="w-3.5 h-3.5 text-neutral-400" />
-                  <span>Salem, Tamil Nadu, India</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-4 pt-3 border-t border-white/10 flex flex-wrap gap-4 text-xs font-mono text-neutral-400">
-              <a 
-                href="https://www.linkedin.com/in/poovarasan-subramani-310105sana" 
-                target="_blank" 
-                rel="noreferrer"
-                className="hover:text-white underline underline-offset-2 flex items-center gap-1"
-              >
-                <LinkedinIcon className="w-3.5 h-3.5" /> linkedin.com/in/poovarasan-subramani-310105sana
-              </a>
-              <a 
-                href="https://github.com/poovarasan-subramani" 
-                target="_blank" 
-                rel="noreferrer"
-                className="hover:text-white underline underline-offset-2 flex items-center gap-1"
-              >
-                <GithubIcon className="w-3.5 h-3.5" /> github.com/poovarasan-subramani
-              </a>
-            </div>
-          </div>
-
-          {/* Professional Summary */}
-          <div className="space-y-2">
-            <h2 className="text-xs font-mono uppercase tracking-widest text-neutral-400 font-bold border-b border-white/10 pb-1">
-              Professional Summary
-            </h2>
-            <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed">
-              Aspiring Python Full Stack Developer and Computer Science & Engineering graduate passionate about 
-              building responsive, scalable, and user-friendly web applications using React.js, Python, Django, 
-              and MySQL. Strong foundation in object-oriented programming, relational schema modeling, 
-              RESTful API design, and modern front-end engineering. Eager to contribute to high-impact engineering teams.
-            </p>
-          </div>
-
-          {/* Technical Skills */}
-          <div className="space-y-3">
-            <h2 className="text-xs font-mono uppercase tracking-widest text-neutral-400 font-bold border-b border-white/10 pb-1">
-              Technical Skillset
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-              <div className="p-3 rounded-lg bg-white/[0.02] border border-white/10">
-                <span className="font-bold text-white block mb-1">Frontend Engineering:</span>
-                <span className="text-neutral-300">HTML5, CSS3, JavaScript (ES6+), React.js, Tailwind CSS, Responsive Web Design, DOM Manipulation</span>
-              </div>
-              <div className="p-3 rounded-lg bg-white/[0.02] border border-white/10">
-                <span className="font-bold text-white block mb-1">Backend & API:</span>
-                <span className="text-neutral-300">Python, Django, Django REST Framework, RESTful APIs, OOP, CRUD Operations, JWT Authentication</span>
-              </div>
-              <div className="p-3 rounded-lg bg-white/[0.02] border border-white/10">
-                <span className="font-bold text-white block mb-1">Databases:</span>
-                <span className="text-neutral-300">MySQL, SQLite, Relational Modeling, Indexing & Query Optimization</span>
-              </div>
-              <div className="p-3 rounded-lg bg-white/[0.02] border border-white/10">
-                <span className="font-bold text-white block mb-1">Developer Tools & Soft Skills:</span>
-                <span className="text-neutral-300">VS Code, Cursor, Git, GitHub, GitHub Copilot | Problem-Solving, Analytical Thinking, Communication</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Featured Project Experience */}
-          <div className="space-y-3">
-            <h2 className="text-xs font-mono uppercase tracking-widest text-neutral-400 font-bold border-b border-white/10 pb-1">
-              Key Projects
-            </h2>
-            <div className="space-y-4">
-              <div className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-2">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between text-xs">
-                  <div className="font-bold text-white text-sm">
-                    Panisudar – Job Portal Web Application
+                {profile?.email && (
+                  <div className="flex items-center sm:justify-end gap-1.5">
+                    <Mail className="w-3.5 h-3.5 text-neutral-400" />
+                    <span>{profile.email}</span>
                   </div>
-                  <div className="font-mono text-neutral-400">
-                    September 2026 – October 2026
+                )}
+                {profile?.phone && (
+                  <div className="flex items-center sm:justify-end gap-1.5">
+                    <Phone className="w-3.5 h-3.5 text-neutral-400" />
+                    <span>{profile.phone}</span>
                   </div>
-                </div>
-                <div className="text-xs font-mono text-neutral-400">
-                  Tech Stack: React.js, Vite, Tailwind CSS, React Router DOM, Axios, Django REST Framework, MySQL
-                </div>
-                <ul className="list-disc list-inside text-xs text-neutral-300 space-y-1">
-                  <li>Developed a responsive job portal for job seekers and recruiters with dedicated, personalized dashboards.</li>
-                  <li>Implemented dynamic multi-criteria job search and filtering engine with bookmarking capability.</li>
-                  <li>Engineered applicant status tracking lifecycle and recruiter pipeline candidate management.</li>
-                  <li>Integrated company profile directory and real-time candidate notification features.</li>
-                </ul>
+                )}
+                {profile?.location && (
+                  <div className="flex items-center sm:justify-end gap-1.5">
+                    <MapPin className="w-3.5 h-3.5 text-neutral-400" />
+                    <span>{profile.location}</span>
+                  </div>
+                )}
               </div>
             </div>
+
+            {displayLinks.length > 0 && (
+              <div className="mt-4 pt-3 border-t border-white/10 flex flex-wrap gap-4 text-xs font-mono text-neutral-400">
+                {displayLinks.map((link) => (
+                  <a
+                    key={link.id || link.url}
+                    href={link.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="hover:text-white underline underline-offset-2 flex items-center gap-1.5"
+                  >
+                    <SocialIcon platform={link.platform} iconName={link.icon_name} className="w-3.5 h-3.5" />
+                    <span>{link.url.replace(/^https?:\/\/(www\.)?/i, '')}</span>
+                  </a>
+                ))}
+              </div>
+            )}
           </div>
+
+          {/* Summary */}
+          {(profile?.about_bio || profile?.hero_description) && (
+            <div className="space-y-2">
+              <h2 className="text-xs font-mono uppercase tracking-widest text-neutral-400 font-bold border-b border-white/10 pb-1">
+                Professional Summary
+              </h2>
+              <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed whitespace-pre-line">
+                {profile.about_bio || profile.hero_description}
+              </p>
+            </div>
+          )}
+
+          {/* Skills */}
+          {skills.length > 0 && (
+            <div className="space-y-3">
+              <h2 className="text-xs font-mono uppercase tracking-widest text-neutral-400 font-bold border-b border-white/10 pb-1">
+                Technical Skillset
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                {Object.entries(groupedSkills).map(
+                  ([group, list]) =>
+                    list.length > 0 && (
+                      <div key={group} className="p-3 rounded-lg bg-white/[0.02] border border-white/10">
+                        <span className="font-bold text-white block mb-1">{group}:</span>
+                        <span className="text-neutral-300">{list.join(', ')}</span>
+                      </div>
+                    )
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Experience */}
+          {experience.length > 0 && (
+            <div className="space-y-3">
+              <h2 className="text-xs font-mono uppercase tracking-widest text-neutral-400 font-bold border-b border-white/10 pb-1">
+                Experience
+              </h2>
+              <div className="space-y-4">
+                {experience.map((exp) => {
+                  const bullets =
+                    exp.responsibilities_list?.length > 0
+                      ? exp.responsibilities_list
+                      : (exp.responsibilities || '').split('\n').filter(Boolean);
+                  return (
+                    <div key={exp.id} className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-2">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between text-xs">
+                        <div className="font-bold text-white text-sm">
+                          {exp.job_role} — {exp.company_name}
+                        </div>
+                        <div className="font-mono text-neutral-400">
+                          {exp.start_date} – {exp.end_date || 'Present'}
+                        </div>
+                      </div>
+                      {bullets.length > 0 && (
+                        <ul className="list-disc list-inside text-xs text-neutral-300 space-y-1">
+                          {bullets.map((b, i) => (
+                            <li key={i}>{b}</li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* Projects */}
+          {projects.length > 0 && (
+            <div className="space-y-3">
+              <h2 className="text-xs font-mono uppercase tracking-widest text-neutral-400 font-bold border-b border-white/10 pb-1">
+                Key Projects
+              </h2>
+              <div className="space-y-4">
+                {projects.map((proj) => (
+                  <div key={proj.id} className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-2">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between text-xs">
+                      <div className="font-bold text-white text-sm">{proj.title}</div>
+                      {proj.duration && <div className="font-mono text-neutral-400">{proj.duration}</div>}
+                    </div>
+                    {Array.isArray(proj.technologies) && proj.technologies.length > 0 && (
+                      <div className="text-xs font-mono text-neutral-400">
+                        Tech Stack: {proj.technologies.join(', ')}
+                      </div>
+                    )}
+                    <p className="text-xs text-neutral-300">{proj.short_description}</p>
+                    {Array.isArray(proj.features) && proj.features.length > 0 && (
+                      <ul className="list-disc list-inside text-xs text-neutral-300 space-y-1">
+                        {proj.features.map((f, i) => (
+                          <li key={i}>{f}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Education */}
-          <div className="space-y-3">
-            <h2 className="text-xs font-mono uppercase tracking-widest text-neutral-400 font-bold border-b border-white/10 pb-1">
-              Education
-            </h2>
-            <div className="space-y-2 text-xs">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between">
-                <div>
-                  <span className="font-bold text-white">B.E. Computer Science and Engineering</span>
-                  <span className="text-neutral-400 block sm:inline sm:ml-2">— Ganesh College of Engineering, Salem</span>
-                </div>
-                <span className="font-mono text-neutral-400">2022 – 2026</span>
-              </div>
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between">
-                <div>
-                  <span className="font-bold text-white">HSC (Higher Secondary Certificate)</span>
-                  <span className="text-neutral-400 block sm:inline sm:ml-2">— Govt Higher Secondary School, Aragalur, Salem</span>
-                </div>
-                <span className="font-mono text-neutral-400">2022</span>
-              </div>
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between">
-                <div>
-                  <span className="font-bold text-white">SSLC (Secondary School Leaving Certificate)</span>
-                  <span className="text-neutral-400 block sm:inline sm:ml-2">— Govt Higher Secondary School, Aragalur, Salem</span>
-                </div>
-                <span className="font-mono text-neutral-400">2020</span>
+          {education.length > 0 && (
+            <div className="space-y-3">
+              <h2 className="text-xs font-mono uppercase tracking-widest text-neutral-400 font-bold border-b border-white/10 pb-1">
+                Education
+              </h2>
+              <div className="space-y-2 text-xs">
+                {education.map((edu) => (
+                  <div key={edu.id} className="flex flex-col sm:flex-row sm:items-center justify-between">
+                    <div>
+                      <span className="font-bold text-white">{edu.degree}</span>
+                      <span className="text-neutral-400 block sm:inline sm:ml-2">
+                        — {edu.institution}, {edu.location}
+                      </span>
+                    </div>
+                    <span className="font-mono text-neutral-400">{edu.period}</span>
+                  </div>
+                ))}
               </div>
             </div>
-          </div>
+          )}
 
-          {/* Courses & Certifications */}
-          <div className="space-y-3">
-            <h2 className="text-xs font-mono uppercase tracking-widest text-neutral-400 font-bold border-b border-white/10 pb-1">
-              Certifications & Professional Courses
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-              <div className="flex items-start gap-2">
-                <CheckCircle className="w-3.5 h-3.5 text-emerald-400 mt-0.5 flex-shrink-0" />
-                <span>Python Full Stack Development — Login360, Coimbatore (2026)</span>
-              </div>
-              <div className="flex items-start gap-2">
-                <CheckCircle className="w-3.5 h-3.5 text-emerald-400 mt-0.5 flex-shrink-0" />
-                <span>Python Programming — YARD STICK, Salem (2026)</span>
-              </div>
-              <div className="flex items-start gap-2">
-                <CheckCircle className="w-3.5 h-3.5 text-emerald-400 mt-0.5 flex-shrink-0" />
-                <span>Android App Development — Wings Technology, Salem (2025)</span>
-              </div>
-              <div className="flex items-start gap-2">
-                <CheckCircle className="w-3.5 h-3.5 text-emerald-400 mt-0.5 flex-shrink-0" />
-                <span>AI and Green Skills — Naan Mudhalvan (2025)</span>
+          {/* Certifications */}
+          {certifications.length > 0 && (
+            <div className="space-y-3">
+              <h2 className="text-xs font-mono uppercase tracking-widest text-neutral-400 font-bold border-b border-white/10 pb-1">
+                Certifications & Professional Courses
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                {certifications.map((cert) => (
+                  <div key={cert.id} className="flex items-start gap-2">
+                    <CheckCircle className="w-3.5 h-3.5 text-emerald-400 mt-0.5 flex-shrink-0" />
+                    <span>
+                      {cert.title} — {cert.issuer} {cert.period_or_date ? `(${cert.period_or_date})` : ''}
+                    </span>
+                  </div>
+                ))}
               </div>
             </div>
-          </div>
-
+          )}
         </div>
 
         {/* Footer Actions */}
         <div className="pt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-4 no-print">
           <div className="text-xs font-mono text-neutral-400">
-            Available immediately for full-time frontend, backend, or full-stack software roles.
+            {resumeDownloadUrl
+              ? `Attached File: ${profile?.resume_filename || 'Resume.pdf'}`
+              : 'Live ATS-formatted portfolio resume'}
           </div>
           <div className="flex items-center gap-3">
-            <button
-              onClick={handlePrint}
-              className="px-5 py-2.5 rounded-xl bg-white text-black font-bold text-xs flex items-center gap-2 hover:bg-neutral-200 transition-all shadow-glow-sm cursor-pointer"
-            >
-              <Download className="w-4 h-4" />
-              <span>Download / Save as PDF</span>
-            </button>
+            {resumeDownloadUrl ? (
+              <a
+                href={resumeDownloadUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                download={profile?.resume_filename || 'Resume.pdf'}
+                className="px-5 py-2.5 rounded-xl bg-white text-black font-bold text-xs flex items-center gap-2 hover:bg-neutral-200 transition-all shadow-glow-sm"
+              >
+                <Download className="w-4 h-4" />
+                <span>Download Official Resume PDF</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+            ) : (
+              <button
+                onClick={handlePrint}
+                className="px-5 py-2.5 rounded-xl bg-white text-black font-bold text-xs flex items-center gap-2 hover:bg-neutral-200 transition-all shadow-glow-sm cursor-pointer"
+              >
+                <Download className="w-4 h-4" />
+                <span>Print / Save as PDF</span>
+              </button>
+            )}
           </div>
         </div>
-
       </div>
     </div>
   );

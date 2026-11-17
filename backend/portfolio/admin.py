@@ -4,7 +4,9 @@ from .models import (
     Skill,
     Project,
     Education,
+    Experience,
     CourseCertification,
+    SocialLink,
     ContactMessage
 )
 
@@ -21,7 +23,13 @@ class ProfileAdmin(admin.ModelAdmin):
             "fields": ("name", "role", "email", "phone", "location")
         }),
         ("Hero & Bio Details", {
-            "fields": ("headline", "hero_description", "about_bio")
+            "fields": (
+                "hero_subheading", "headline", "hero_description",
+                "short_intro", "about_bio",
+                "hero_primary_btn_text", "hero_primary_btn_link",
+                "hero_secondary_btn_text", "hero_secondary_btn_link",
+                "hero_tertiary_btn_text", "hero_tertiary_btn_link",
+            )
         }),
         ("Media & Links", {
             "fields": ("linkedin_url", "github_url", "resume_file", "resume_url", "avatar", "avatar_url")
@@ -29,7 +37,6 @@ class ProfileAdmin(admin.ModelAdmin):
     )
 
     def has_add_permission(self, request):
-        # Keep single profile instance
         if Profile.objects.exists():
             return False
         return super().has_add_permission(request)
@@ -39,7 +46,7 @@ class ProfileAdmin(admin.ModelAdmin):
 class SkillAdmin(admin.ModelAdmin):
     list_display = ('name', 'category', 'badge_label', 'icon_name', 'order', 'featured')
     list_filter = ('category', 'featured')
-    search_fields = ('name', 'badge_label')
+    search_fields = ('name', 'badge_label', 'description')
     list_editable = ('order', 'featured')
 
 
@@ -54,9 +61,17 @@ class ProjectAdmin(admin.ModelAdmin):
 
 @admin.register(Education)
 class EducationAdmin(admin.ModelAdmin):
-    list_display = ('degree', 'institution', 'period', 'location', 'order')
+    list_display = ('degree', 'institution', 'start_year', 'end_year', 'period', 'location', 'order')
     list_editable = ('order',)
     search_fields = ('degree', 'institution')
+
+
+@admin.register(Experience)
+class ExperienceAdmin(admin.ModelAdmin):
+    list_display = ('job_role', 'company_name', 'employment_type', 'start_date', 'end_date', 'order')
+    list_filter = ('employment_type',)
+    list_editable = ('order',)
+    search_fields = ('company_name', 'job_role', 'responsibilities')
 
 
 @admin.register(CourseCertification)
@@ -65,6 +80,14 @@ class CourseCertificationAdmin(admin.ModelAdmin):
     list_filter = ('entry_type', 'issuer')
     list_editable = ('order',)
     search_fields = ('title', 'issuer', 'skills_covered')
+
+
+@admin.register(SocialLink)
+class SocialLinkAdmin(admin.ModelAdmin):
+    list_display = ('platform', 'label', 'url', 'icon_name', 'is_active', 'order')
+    list_filter = ('is_active', 'platform')
+    list_editable = ('is_active', 'order')
+    search_fields = ('platform', 'label', 'url')
 
 
 @admin.register(ContactMessage)

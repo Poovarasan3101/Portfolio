@@ -50,7 +50,7 @@ const Projects = ({ projects = [] }) => {
               {/* Card Image / Preview Mockup Banner */}
               <div className="relative aspect-video w-full overflow-hidden bg-[#161616] border-b border-white/10">
                 <img
-                  src={project.image_url || "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1200&q=80"}
+                  src={project.image_display_url || project.image_url || "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80"}
                   alt={project.title}
                   className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500 filter brightness-90 group-hover:brightness-100"
                 />
@@ -204,7 +204,7 @@ const Projects = ({ projects = [] }) => {
             {/* Modal Image */}
             <div className="relative aspect-video rounded-xl overflow-hidden border border-white/10 bg-[#161616]">
               <img
-                src={selectedProject.image_url}
+                src={selectedProject.image_display_url || selectedProject.image_url || "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80"}
                 alt={selectedProject.title}
                 className="w-full h-full object-cover"
               />

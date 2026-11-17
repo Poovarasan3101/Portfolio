@@ -149,29 +149,42 @@ Double-click `run_all.bat` in the project root directory. It will automatically 
 
 ## 📡 REST API Endpoints
 
-| Method | Endpoint | Description |
-|---|---|---|
-| `GET` | `/api/overview/` | Consolidated payload (Profile, Skills, Projects, Education, Certifications) |
-| `GET` | `/api/profile/` | Poovarasan's profile info, social links, resume URL |
-| `GET` | `/api/skills/` | List of skills filtered by category (Frontend, Backend, Database, Tools, Soft Skills) |
-| `GET` | `/api/projects/` | List of featured projects including Panisudar Job Portal |
-| `GET` | `/api/projects/<slug>/` | Detailed project case study |
-| `GET` | `/api/education/` | Academic milestones (B.E. CSE, HSC, SSLC) |
-| `GET` | `/api/certifications/` | Certificate programs & course records |
-| `POST` | `/api/contact/` | Contact form submission (persists into MySQL `portfolio_contactmessage`) |
-| `POST` | `/api/auth/token/` | JWT token acquisition for protected endpoints |
-| `POST` | `/api/auth/token/refresh/` | JWT refresh cycle |
+| Method | Endpoint | Access | Description |
+|---|---|---|---|
+| `GET` | `/api/overview/` | Public | Consolidated live payload (`profile`, `skills`, `projects`, `education`, `experience`, `certifications`, `social_links`) |
+| `GET, PATCH` | `/api/profile/` & `/api/about/` | Public GET / Admin Write | Profile, Hero section, About Me & Avatar image upload |
+| `GET, POST, PATCH, DELETE` | `/api/skills/` & `/api/skills/<id>/` | Public GET / Admin Write | Full CRUD for Frontend, Backend, Database, Tools & Soft Skills |
+| `GET, POST, PATCH, DELETE` | `/api/projects/` & `/api/projects/<id>/` | Public GET / Admin Write | Full CRUD for Projects with screenshot image upload |
+| `GET, POST, PATCH, DELETE` | `/api/education/` & `/api/education/<id>/` | Public GET / Admin Write | Full CRUD for Education history |
+| `GET, POST, PATCH, DELETE` | `/api/experience/` & `/api/experience/<id>/` | Public GET / Admin Write | Full CRUD for Experience / Internships / Training |
+| `GET, POST, PATCH, DELETE` | `/api/certificates/` & `/api/certificates/<id>/` | Public GET / Admin Write | Full CRUD for Certificates & Courses with Image/PDF upload |
+| `GET, POST, DELETE` | `/api/resume/` | Public GET / Admin Write | Get, upload/replace, or delete Resume PDF |
+| `GET, POST, PATCH, DELETE` | `/api/social-links/` & `/api/social-links/<id>/` | Public GET / Admin Write | Full CRUD for Social Links (LinkedIn, GitHub, Instagram, etc.) |
+| `POST / GET, PATCH, DELETE` | `/api/contact/` & `/api/contact/<id>/` | Public POST / Admin Manage | Public message submission; Admin inbox read/unread & delete |
+| `POST` | `/api/admin/login/` | Public | Admin username/password login returning JWT tokens |
+| `POST` | `/api/admin/logout/` | Admin JWT | Admin logout endpoint |
+| `GET` | `/api/admin/me/` | Admin JWT | Verify active admin session |
+| `POST` | `/api/admin/change-password/` | Admin JWT | Securely change admin password |
+| `GET` | `/api/admin/dashboard/` | Admin JWT | Dashboard metrics & recent contact messages |
 
 ---
 
-## 🔐 Django Admin Dashboard
+## 🔐 React Admin Dashboard (Full CMS)
 
-The administrative panel allows dynamic editing and content management without touching code:
-- **Profile**: Change headline, hero description, bio, contact email, and upload new resume PDF.
-- **Skills**: Add or adjust technical and soft skills, assign custom categories and ordering.
-- **Projects**: Add new projects, upload screenshots, update live demo / GitHub links, and bullet points.
-- **Education & Certifications**: Maintain timeline milestones and certificate previews.
-- **Contact Messages**: Read messages sent by recruiters directly via the website contact form.
+Visit **[http://localhost:3000/admin/login](http://localhost:3000/admin/login)** to manage your entire portfolio without editing code:
+- **Username**: `admin`
+- **Password**: `poovarasan` *(can be changed anytime inside **Account & Security**)*
+
+Available Admin Modules:
+- **Dashboard**: Total Projects, Skills, Certificates, Messages & Recent Inquiries.
+- **Profile & About**: Full name, title, profile image upload, short intro, about bio, contact info.
+- **Hero Section**: Subheading, main headline, description, avatar, CTA button texts & links.
+- **Skills, Projects, Education, Experience, Certificates, Social Links**: Complete Create, Edit, Delete with confirmation dialogs & file uploads.
+- **Resume PDF**: Upload, replace, preview, download, or delete your resume PDF.
+- **Contact Messages**: Filter unread/read, open full details, mark read/unread, reply via email, or delete.
+- **Account & Security**: Change admin password.
+
+Django's built-in admin also remains available at `http://127.0.0.1:8000/admin/`.
 
 ---
 

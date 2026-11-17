@@ -15,7 +15,7 @@ import { LinkedinIcon } from './Icons';
 import confetti from 'canvas-confetti';
 import { portfolioService } from '../services/api';
 
-const Contact = ({ profile }) => {
+const Contact = ({ profile, socialLinks = [] }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -113,39 +113,59 @@ const Contact = ({ profile }) => {
     }
   };
 
+  const linkedinEntry = socialLinks.find((s) => s.platform.toLowerCase().includes('linkedin'));
+  const linkedinHref = linkedinEntry?.url || profile?.linkedin_url || '';
+  const linkedinLabel = linkedinEntry?.label || (linkedinHref ? linkedinHref.replace(/^https?:\/\/(www\.)?linkedin\.com\/in\//i, '') : '');
+
   const contactInfo = [
-    {
-      icon: Mail,
-      title: "Direct Email",
-      value: profile?.email || "poovarasan31012005@gmail.com",
-      href: `mailto:${profile?.email || "poovarasan31012005@gmail.com"}`,
-      copyable: true,
-      id: "email"
-    },
-    {
-      icon: Phone,
-      title: "Mobile Contact",
-      value: profile?.phone || "+91-9629617818",
-      href: `tel:${profile?.phone || "+91-9629617818"}`,
-      copyable: true,
-      id: "phone"
-    },
-    {
-      icon: MapPin,
-      title: "Location",
-      value: profile?.location || "Salem, Tamil Nadu, India",
-      href: null,
-      copyable: false,
-      id: "location"
-    },
-    {
-      icon: LinkedinIcon,
-      title: "LinkedIn Profile",
-      value: "poovarasan-subramani-310105sana",
-      href: profile?.linkedin_url || "https://www.linkedin.com/in/poovarasan-subramani-310105sana",
-      copyable: false,
-      id: "linkedin"
-    }
+    ...(profile?.email
+      ? [
+          {
+            icon: Mail,
+            title: 'Direct Email',
+            value: profile.email,
+            href: `mailto:${profile.email}`,
+            copyable: true,
+            id: 'email',
+          },
+        ]
+      : []),
+    ...(profile?.phone
+      ? [
+          {
+            icon: Phone,
+            title: 'Mobile Contact',
+            value: profile.phone,
+            href: `tel:${profile.phone}`,
+            copyable: true,
+            id: 'phone',
+          },
+        ]
+      : []),
+    ...(profile?.location
+      ? [
+          {
+            icon: MapPin,
+            title: 'Location',
+            value: profile.location,
+            href: null,
+            copyable: false,
+            id: 'location',
+          },
+        ]
+      : []),
+    ...(linkedinHref
+      ? [
+          {
+            icon: LinkedinIcon,
+            title: 'LinkedIn Profile',
+            value: linkedinLabel || linkedinHref,
+            href: linkedinHref,
+            copyable: false,
+            id: 'linkedin',
+          },
+        ]
+      : []),
   ];
 
   return (
