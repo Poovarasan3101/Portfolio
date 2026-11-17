@@ -195,7 +195,11 @@ SIMPLE_JWT = {
 # CORS & CSRF settings (configured via environment variables)
 _raw_cors = os.getenv(
     'CORS_ALLOWED_ORIGINS',
+<<<<<<< HEAD
     'http://localhost:3000,http://127.0.0.1:3000,http://localhost:5173,http://127.0.0.1:5173' if DEBUG else ''
+=======
+    'https://portfolio-gules-psi-88.vercel.app/'
+>>>>>>> c5982ab9419e96ddace896b0354b8ed2d0dd409b
 )
 CORS_ALLOWED_ORIGINS = [origin.strip() for origin in _raw_cors.split(',') if origin.strip()]
 CORS_ALLOW_CREDENTIALS = True
