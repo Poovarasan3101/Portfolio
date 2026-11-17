@@ -8,6 +8,7 @@ __pycache__/
 *$py.class
 *.sqlite3
 backend/media/
+backend/staticfiles/
 venv/
 backend_venv/
 
