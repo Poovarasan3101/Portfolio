@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://portfolio-2-v3oo.onrender.com/';
+export const API_BASE_URL = 'https://portfolio-2-v3oo.onrender.com/';
 
 export const TOKEN_STORAGE = {
   ACCESS: 'portfolio_admin_access',
