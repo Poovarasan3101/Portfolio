@@ -7,6 +7,9 @@ import os
 import sys
 from dotenv import load_dotenv
 import mysql.connector
+import pymysql
+
+pymysql.install_as_MySQLdb()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
