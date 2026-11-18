@@ -6,7 +6,7 @@ from pathlib import Path
 import os
 import sys
 from dotenv import load_dotenv
-import mysql.connector
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -73,52 +73,25 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database configuration
 # Primary: MySQL database (Myportfolio) as requested
 # Fallback: SQLite for offline/sandboxed development if MySQL network is unreachable
-DB_NAME = os.getenv('DB_NAME', 'Myportfolio')
-DB_USER = os.getenv('DB_USER', 'root')
-DB_PASSWORD = os.getenv('DB_PASSWORD', 'poovarasan')
-DB_HOST = os.getenv('DB_HOST', '127.0.0.1')
-DB_PORT = os.getenv('DB_PORT', '3306')
+# DB_NAME = os.getenv('DB_NAME', 'portfolio1_k8f9')
+# DB_USER = os.getenv('DB_USER', 'root')
+# DB_PASSWORD = os.getenv('DB_PASSWORD', 'mzJC5n60D4uIwCBSveZxw6iPalTouRkp')
+# DB_HOST = os.getenv('DB_HOST', 'dpg-dbulqb1srm7s73f9eiqg-a')
+# DB_PORT = os.getenv('DB_PORT', '5432')
 
 # Check if MySQL can be reached
-def is_mysql_available():
-    try:
-        import pymysql
-        conn = pymysql.connect(
-            host=DB_HOST,
-            user=DB_USER,
-            password=DB_PASSWORD,
-            database=DB_NAME,
-            port=int(DB_PORT),
-            connect_timeout=2
-        )
-        conn.close()
-        return True
-    except Exception as e:
-        return False
+DATABASE_URL = os.getenv('DATABASE_URL')
 
-if is_mysql_available():
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': DB_NAME,
-            'USER': DB_USER,
-            'PASSWORD': DB_PASSWORD,
-            'HOST': DB_HOST,
-            'PORT': DB_PORT,
-            'OPTIONS': {
-                'charset': 'utf8mb4',
-                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-            }
-        }
-    }
-else:
-    # Graceful fallback to SQLite so migrations and checks never crash
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
+if not DATABASE_URL:
+    raise ValueError("DATABASE_URL is missing")
+
+DATABASES = {
+    'default': dj_database_url.parse(
+        DATABASE_URL,
+        conn_max_age=600,
+        ssl_require=True
+    )
+}
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -175,7 +148,7 @@ SIMPLE_JWT = {
 # CORS settings (configured via .env)
 _raw_cors = os.getenv(
     'CORS_ALLOWED_ORIGINS',
-    'http://localhost:3000,http://127.0.0.1:3000,http://localhost:5173,http://127.0.0.1:5173'
+    'https://portfolio-gules-psi-88.vercel.app/:517'  # Default to the production frontend URL if not set
 )
 CORS_ALLOWED_ORIGINS = [origin.strip() for origin in _raw_cors.split(',') if origin.strip()]
 CORS_ALLOW_CREDENTIALS = True
