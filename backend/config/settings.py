@@ -6,7 +6,7 @@ from pathlib import Path
 import os
 import sys
 from dotenv import load_dotenv
-import dj_database_url
+import mysql.connector
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -148,7 +148,7 @@ SIMPLE_JWT = {
 # CORS settings (configured via .env)
 _raw_cors = os.getenv(
     'CORS_ALLOWED_ORIGINS',
-    'https://portfolio-gules-psi-88.vercel.app/:517'  # Default to the production frontend URL if not set
+    'http://localhost:3000,http://127.0.0.1:3000,http://localhost:5173,http://127.0.0.1:5173'
 )
 CORS_ALLOWED_ORIGINS = [origin.strip() for origin in _raw_cors.split(',') if origin.strip()]
 CORS_ALLOW_CREDENTIALS = True
