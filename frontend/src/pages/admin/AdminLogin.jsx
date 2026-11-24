@@ -102,7 +102,7 @@ const AdminLogin = () => {
                   onChange={(e) => setUsername(e.target.value)}
                   placeholder="Enter admin username"
                   autoComplete="username"
-                  required
+                  
                   className="w-full pl-10 pr-4 py-3 rounded-xl bg-[#161616] border border-white/10 text-white placeholder-neutral-500 text-sm focus:outline-none focus:border-white/40 transition-all"
                 />
               </div>
@@ -120,7 +120,7 @@ const AdminLogin = () => {
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter your password"
                   autoComplete="current-password"
-                  required
+                  
                   className="w-full pl-10 pr-11 py-3 rounded-xl bg-[#161616] border border-white/10 text-white placeholder-neutral-500 text-sm focus:outline-none focus:border-white/40 transition-all"
                 />
                 <button
