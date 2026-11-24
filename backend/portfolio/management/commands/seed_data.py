@@ -26,8 +26,8 @@ class Command(BaseCommand):
         upgrade_only = options.get('upgrade_only', False)
 
         # Ensure admin superuser exists
-        if not User.objects.filter(username='admin').exists():
-            User.objects.create_superuser('admin', 'poovarasan31012005@gmail.com', 'poovarasan')
+        if not User.objects.filter(username='sana').exists():
+            User.objects.create_superuser('sana', 'poovarasan31012005@gmail.com', 'poovarasan')
             self.stdout.write(self.style.SUCCESS("Superuser 'admin' created with password 'poovarasan'."))
 
         if upgrade_only:
