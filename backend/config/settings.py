@@ -146,9 +146,13 @@ SIMPLE_JWT = {
 }
 
 # CORS settings (configured via .env)
-_raw_cors = os.getenv(
-    'CORS_ALLOWED_ORIGINS',
-    'https://portfolio-gules-psi-88.vercel.app'  # Default to the production frontend URL if not set
-)
-CORS_ALLOWED_ORIGINS = [origin.strip() for origin in _raw_cors.split(',') if origin.strip()]
+_raw_cors = os.getenv('CORS_ALLOWED_ORIGINS', '')
+CORS_ALLOWED_ORIGINS = [o.strip() for o in _raw_cors.split(',') if o.strip()]
+
+# Vercel preview/production URLs ellathukum
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https://portfolio-.*\.vercel\.app$",
+]
+
+CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS
 CORS_ALLOW_CREDENTIALS = True
